@@ -1,6 +1,6 @@
 # Basic RE AI Benchmark
 
-A small benchmark for testing how anti-reverse-engineering techniques affect an AI agent's ability to understand a compiled program. The current version provides three unprotected programs as a baseline; transformations will be added later.
+A small benchmark for testing how anti-reverse-engineering techniques affect an AI agent's ability to understand a compiled program. It includes three baseline programs and an experimental eight-variant transformation suite.
 
 ## How it works
 
@@ -58,7 +58,9 @@ Keep the model, tools, prompts, time budget, build environment, and grading seed
 python bench.py compare --baseline runs/baseline/report.json --treatment runs/transformed/report.json --out runs/comparison.json
 ```
 
-A positive score drop means worse performance with the transformation. Transformation creation is not included yet. Use `run_notes.example.json` to record run settings.
+A positive score drop means worse performance with the transformation. Use `run_notes.example.json` to record run settings.
+
+See [Transformation suite](docs/transformations.md) for building and validating the eight variants, Windows TPM setup, instruction-pair scoring, and resource logs. Preparation and correctness tests do not run model benchmarks.
 
 ## Tests
 

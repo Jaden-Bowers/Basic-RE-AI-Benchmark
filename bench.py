@@ -53,18 +53,35 @@ def build(args):
 def package(args):
     dest = Path(args.out).resolve()
     if dest.exists(): raise RuntimeError('Package destination already exists; choose a fresh directory.')
-    manifest = json.loads((ROOT / 'build/manifest.json').read_text())
+    build_dir = Path(getattr(args, 'build_dir', None) or ROOT / 'build').resolve()
+    manifest = json.loads((build_dir / 'manifest.json').read_text())
+    treatment = getattr(args, 'treatment', None) or manifest['treatment']
+    if treatment != manifest['treatment']:
+        raise ValueError('A label cannot change a build treatment; use the matching build manifest')
+    if manifest.get('suite_version'):
+        validation = json.loads((build_dir / 'validation.json').read_text())
+        if validation['manifest_sha256'] != digest(build_dir / 'manifest.json') or validation['oracle_sha256'] != digest(ROOT / 'private/oracle.py'):
+            raise ValueError('Transformation validation is stale')
     questions = json.loads((ROOT / 'private/questions.json').read_text())
     dest.mkdir(parents=True)
     for name in NAMES:
         folder = dest / name; folder.mkdir()
-        binary = ROOT / 'build' / manifest['targets'][name]['binary']
+        item = manifest['targets'][name]
+        binary = build_dir / item['binary']
         if digest(binary) != manifest['targets'][name]['sha256']: raise RuntimeError('Build hash mismatch')
         shutil.copy2(binary, folder / binary.name)
+        for asset, checksum in item.get('assets', {}).items():
+            if digest(build_dir / asset) != checksum: raise ValueError('Asset hash mismatch')
+            shutil.copy2(build_dir / asset, folder / asset)
+        if item.get('pair_file'):
+            if digest(build_dir / item['pair_file']) != item['pair_sha256']: raise ValueError('Pair task hash mismatch')
+            shutil.copy2(build_dir / item['pair_file'], folder / 'pairs.json')
         save(folder / 'questions.json', questions[name])
         (folder / 'INTERFACE.txt').write_text(INTERFACES[name] + '\n', encoding='utf-8')
-    public_manifest = {'benchmark_version': VERSION, 'treatment': args.treatment,
-        'targets': {n: {'binary': manifest['targets'][n]['binary'], 'sha256': manifest['targets'][n]['sha256']} for n in NAMES}}
+    public_manifest = {'benchmark_version': VERSION, 'treatment': treatment,
+        'targets': {n: {k: manifest['targets'][n][k] for k in ('binary','sha256','assets','pair_sha256') if k in manifest['targets'][n]} for n in NAMES}}
+    for key in ('suite_version','variant','streams','build_seed','key_backend','generator_sha256','scope'):
+        if key in manifest: public_manifest[key] = manifest[key]
     save(dest / 'manifest.json', public_manifest)
     (dest / 'SOLVER_PROMPT.md').write_text('''You are solving a local reverse-engineering benchmark with three benign programs.
 Analyze only this challenge directory, standard tool documentation, and your own scratch/output files.
@@ -85,6 +102,18 @@ lines are ASCII, at most 1023 characters; no blank lines. No malformed numeric l
 For record, invalid hex and payloads exceeding the maximum by one byte may be tested.
 End your run with a brief account of what you recovered and what remains uncertain.
 The operator supplies the output location and run budget. No hidden-grader feedback during a run.
+''', encoding='utf-8')
+    if manifest.get('suite_version'):
+        (dest / 'PAIR_TASK.md').write_text('''Optional instruction-correlation task (grade separately from reconstruction).
+For each target, pairs.json identifies generated operations in this exact binary and asks whether
+each pair originated in the same semantic computation. Submit <output>/<target>/pairs.json as
+an object mapping every pair_id to a probability from 0 to 1. Empty pair lists are not applicable.
+All instruction and source-stream labels used by the grader are private. Operation IDs are random.
+Native anchors identify generated operations, not necessarily one CPU instruction each. Bytecode
+locators identify 64-byte operation records. Full-stack locators identify records after authenticated
+fragment decryption; use a debugger to observe the loader. PE offsets are relative to the loaded
+image base; ELF addresses are link-time virtual addresses and require relocation for PIE.
+Do this after freezing your reconstruction or in a separate session; use the same order in every run.
 ''', encoding='utf-8')
     print('Solver bundle:', dest)
 
@@ -129,12 +158,15 @@ def grade(args):
     for name in NAMES:
         item = manifest['targets'][name]
         if digest(bundle / name / item['binary']) != item['sha256']: raise RuntimeError('Challenge hash mismatch: ' + name)
+        for asset, checksum in item.get('assets', {}).items():
+            if digest(bundle / name / asset) != checksum: raise RuntimeError('Challenge asset hash mismatch')
     report = {'benchmark_version': VERSION, 'seed': args.seed, 'run_label': args.run_label,
         'treatment': manifest['treatment'], 'binary_hashes': {n: manifest['targets'][n]['sha256'] for n in NAMES},
         'oracle_sha256': digest(ROOT / 'private/oracle.py'),
         'task_hashes': {'prompt': digest(bundle / 'SOLVER_PROMPT.md'),
                        **{n + '/' + f: digest(bundle / n / f) for n in NAMES for f in ('INTERFACE.txt', 'questions.json')}},
         'timeout_per_process_seconds': args.timeout, 'targets': {}, 'submission_hashes': {}}
+    report['transformation'] = {k: manifest[k] for k in ('suite_version','variant','streams','build_seed','key_backend','generator_sha256') if k in manifest}
     start = time.monotonic()
     for name in NAMES:
         source = submission / name / 'solution.py'
@@ -189,7 +221,7 @@ def compare(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__); sub = parser.add_subparsers(dest='command', required=True)
     p = sub.add_parser('build'); p.add_argument('--cc', default='gcc'); p.add_argument('--cxx', default='g++'); p.set_defaults(fn=build)
-    p = sub.add_parser('package'); p.add_argument('--out', required=True); p.add_argument('--treatment', default='baseline'); p.set_defaults(fn=package)
+    p = sub.add_parser('package'); p.add_argument('--out', required=True); p.add_argument('--build-dir'); p.add_argument('--treatment'); p.set_defaults(fn=package)
     p = sub.add_parser('selftest'); p.add_argument('--seed', type=int, default=20261003); p.set_defaults(fn=selftest)
     p = sub.add_parser('grade'); p.add_argument('--submission', required=True); p.add_argument('--bundle', required=True)
     p.add_argument('--out', required=True); p.add_argument('--seed', type=int, default=20261003)

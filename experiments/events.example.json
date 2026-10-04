@@ -1,0 +1,7 @@
+[
+  {"elapsed_seconds": 0, "kind": "start"},
+  {"elapsed_seconds": 30, "kind": "usage", "tokens": 1200, "context_tokens": 1800, "tool_calls": 3, "executions": 2, "traces": 1},
+  {"elapsed_seconds": 90, "kind": "checkpoint", "submission": "checkpoints/001"},
+  {"elapsed_seconds": 120, "kind": "annotation", "incorrect_hypotheses": 1},
+  {"elapsed_seconds": 180, "kind": "checkpoint", "submission": "checkpoints/002"}
+]

@@ -1,0 +1,80 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define STREAMS @STREAMS@
+#define CELLS (STREAMS*256+1024)
+#define MOVING @MOVING@
+#define ENTANGLED @ENTANGLED@
+#define STRONG @STRONG@
+#if defined(__GNUC__)
+#define NOINLINE __attribute__((noinline))
+#else
+#define NOINLINE
+#endif
+static uint64_t cells[CELLS+1], masks[CELLS+1];
+static unsigned places[CELLS+1], owners[CELLS+1];
+static uint64_t random_state=@RNG@ULL;
+static uint64_t rng(void) {
+    random_state ^= random_state<<13;random_state ^= random_state>>7;random_state ^= random_state<<17;
+    return random_state;
+}
+static void shift_cell(unsigned id) {
+    if(!MOVING) return;
+    unsigned a=places[id], b=(unsigned)(rng()%(CELLS+1)), other=owners[b];
+    uint64_t value=cells[a]^masks[id], other_value=cells[b]^masks[other];
+    uint64_t mask=rng();
+    cells[b]=value^mask; masks[id]=mask;
+    if(a!=b) { cells[a]=other_value^masks[other]; places[other]=a;owners[a]=other; }
+    places[id]=b;owners[b]=id;
+}
+static uint64_t cell_get(unsigned id) {
+    uint64_t value=cells[places[id]]^masks[id];shift_cell(id);return value;
+}
+static void cell_set(unsigned id,uint64_t value) {
+    cells[places[id]]=value^masks[id];shift_cell(id);
+}
+/* XOR difference vector stored as a Fenwick tree. Nodes mix multiple streams. */
+static NOINLINE uint64_t getv(unsigned id) {
+    if(id>=CELLS) abort();
+    if(!ENTANGLED) return cell_get(id);
+    uint64_t value=0;for(unsigned j=id+1;j;j-=j&(~j+1))value^=cell_get(j);
+    return value;
+}
+static void tree_xor(unsigned pos,uint64_t delta) {
+    for(unsigned j=pos+1;j<=CELLS;j+=j&(~j+1))cell_set(j,cell_get(j)^delta);
+}
+static NOINLINE void setv(unsigned id,uint64_t value) {
+    if(id>=CELLS) abort();
+    if(!ENTANGLED) { cell_set(id,value);return; }
+    uint64_t delta=getv(id)^value;
+    tree_xor(id,delta);if(id+1<CELLS)tree_xor(id+1,delta);
+}
+static NOINLINE uint64_t mixed_add(uint64_t a,uint64_t b) {
+    volatile uint64_t x=a,y=b;return (x^y)+((x&y)<<1);
+}
+static NOINLINE uint64_t mixed_xor(uint64_t a,uint64_t b) {
+    volatile uint64_t x=a,y=b;return (x|y)-(x&y);
+}
+static uint64_t pick(uint64_t p,uint64_t yes,uint64_t no) {
+    uint64_t m=0-(uint64_t)(p!=0);return (yes&m)|(no&~m);
+}
+static volatile uint64_t immediate_mask=@MASK@ULL;
+static volatile uint64_t label_mod=1000003ULL;
+static volatile uint64_t auxiliary_sink;
+@AUDIT_DECL@
+@TABLE@
+@EXECUTE@
+static NOINLINE void core(uint64_t input[8],uint64_t output[8],uint64_t memory[1024]) {
+    for(unsigned i=0;i<=CELLS;i++) { places[i]=i;owners[i]=i;masks[i]=0;cells[i]=0; }
+    for(unsigned s=0;s<STREAMS;s++)for(unsigned r=0;r<8;r++)setv(r*STREAMS+s,input[r]);
+    for(unsigned i=0;i<1024;i++)setv(STREAMS*256+i,memory[i]);
+    execute();
+    for(unsigned r=0;r<8;r++)output[r]=getv((8+r)*STREAMS);
+    for(unsigned i=0;i<1024;i++)memory[i]=getv(STREAMS*256+i);
+    for(unsigned s=1;s<STREAMS;s++) {
+        uint64_t v=getv(8*STREAMS+s);auxiliary_sink^=v;
+        @AUX_AUDIT@
+    }
+}
+@ADAPTER@

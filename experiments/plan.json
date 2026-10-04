@@ -1,0 +1,529 @@
+{
+  "status": "prepared only; no agent runs",
+  "builds": [
+    {
+      "variant": "plain",
+      "streams": 1,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "cfg",
+      "streams": 1,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "vm",
+      "streams": 1,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "vm-strong",
+      "streams": 1,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 2,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 2,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 2,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 2,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 2,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 4,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 4,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 4,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 4,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 4,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 8,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 8,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 8,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 8,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 8,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 16,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 16,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 16,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 16,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "interleave",
+      "streams": 16,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 2,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 2,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 2,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 2,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 2,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 4,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 4,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 4,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 4,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 4,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 8,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 8,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 8,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 8,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 8,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 16,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 16,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 16,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 16,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "decorrelate",
+      "streams": 16,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 2,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 2,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 2,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 2,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 2,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 4,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 4,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 4,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 4,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 4,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 8,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 8,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 8,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 8,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 8,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 16,
+      "seed": 1,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 16,
+      "seed": 2,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 16,
+      "seed": 3,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 16,
+      "seed": 4,
+      "key_backend": null
+    },
+    {
+      "variant": "entangle",
+      "streams": 16,
+      "seed": 5,
+      "key_backend": null
+    },
+    {
+      "variant": "full",
+      "streams": 2,
+      "seed": 1,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 2,
+      "seed": 2,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 2,
+      "seed": 3,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 2,
+      "seed": 4,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 2,
+      "seed": 5,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 4,
+      "seed": 1,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 4,
+      "seed": 2,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 4,
+      "seed": 3,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 4,
+      "seed": 4,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 4,
+      "seed": 5,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 8,
+      "seed": 1,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 8,
+      "seed": 2,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 8,
+      "seed": 3,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 8,
+      "seed": 4,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 8,
+      "seed": 5,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 16,
+      "seed": 1,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 16,
+      "seed": 2,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 16,
+      "seed": 3,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 16,
+      "seed": 4,
+      "key_backend": "windows-tpm"
+    },
+    {
+      "variant": "full",
+      "streams": 16,
+      "seed": 5,
+      "key_backend": "windows-tpm"
+    }
+  ],
+  "binary_count": 252,
+  "comparisons": [
+    [
+      "vm-strong",
+      "decorrelate"
+    ],
+    [
+      "decorrelate",
+      "entangle"
+    ],
+    [
+      "entangle",
+      "full"
+    ]
+  ],
+  "tracks": {
+    "cold": "Each seed in a fresh session; no prior solutions.",
+    "transfer": "Solve seed 1, then give its frozen analysis to seeds 2..5. Compare with cold runs at the same budget."
+  },
+  "note": "This is a branching ablation design. Interleave is a native scheduler, not VM+strong plus interleaving. Compare matched mechanisms; do not assume every adjacent row adds one layer."
+}
