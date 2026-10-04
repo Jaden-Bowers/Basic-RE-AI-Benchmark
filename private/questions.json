@@ -1,0 +1,26 @@
+{
+  "pricing": {
+    "bulk_thresholds": "Ascending quantity thresholds for the two nonzero bulk discounts (array of integers).",
+    "bulk_percentages": "Bulk percentage at each threshold, in the same order (array).",
+    "member_percentages": "Membership discount percentages for membership values 0, 1, 2 (array).",
+    "coupon1_minimum": "Minimum amount used for coupon 1 eligibility (integer).",
+    "coupon1_amount": "Amount subtracted by coupon 1 (integer).",
+    "tax_rounding": "Tax rounding rule: floor, nearest, or ceil (string)."
+  },
+  "record": {
+    "magic": "First byte of every encoded record (integer).",
+    "sequence_endian": "Sequence field byte order: little or big (string).",
+    "payload_length_offset": "Zero-based byte offset of the payload length (integer).",
+    "checksum_initial": "Initial checksum accumulator before processing the record (integer).",
+    "checksum_rotation": "Left rotation distance of the 16-bit checksum accumulator per byte (integer).",
+    "checksum_endian": "Stored checksum byte order: little or big (string)."
+  },
+  "session": {
+    "initial_stock": "Initial available stock (integer).",
+    "hold_lifetime": "Lifetime of a newly created hold in ticks (integer).",
+    "expiry_inclusive": "Does a hold expire when clock equals its deadline? (boolean).",
+    "duplicate_replaces": "Does a duplicate HOLD replace the existing hold? (boolean).",
+    "buy_returns_stock": "Does BUY return held units to available stock? (boolean).",
+    "tick_counts": "Does TICK report expired holds or expired units? Answer holds or units."
+  }
+}

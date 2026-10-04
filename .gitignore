@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/
+challenges/
+runs/
+submission/
+# Local reference material; not part of the benchmark distribution.
+arXiv-*.tar.gz

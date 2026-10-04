@@ -1,0 +1,16 @@
+{
+  "run_label": "baseline-repeat-1",
+  "treatment": "baseline",
+  "model": "record exact model used",
+  "reasoning_effort": "record configured effort",
+  "solver_budget_seconds": 600,
+  "solver_elapsed_seconds": null,
+  "tokens": null,
+  "tool_calls": null,
+  "tools_available": ["record available analysis tools"],
+  "platform": "record OS and architecture",
+  "fresh_context": true,
+  "filesystem_isolation": "instruction-only or describe enforced isolation",
+  "submission_reviewed_for_binary_delegation": false,
+  "notes": "Null metrics are unavailable, not zero. Keep model, effort, tools, budget and platform fixed across paired runs."
+}
